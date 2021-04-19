@@ -1,3 +1,4 @@
+			   
 const CryptoJS = require("crypto-js");
 var crypto = require('crypto');
 const { default: PQueue } = require('p-queue');
@@ -22,6 +23,7 @@ var deviceInfos = [
 var deviceInfo = deviceInfos[Math.floor(Math.random() * deviceInfos.length)]
 
 var producGame = {
+									  
     gameSignin: (axios, options) => {
         const useragent = buildUnicomUserAgent(options, 'p')
         let data = {
@@ -143,6 +145,7 @@ var producGame = {
 
             console.info(Buffer.from(res.data).toString('hex'))
 
+																									
             await new Promise((resolve, reject) => setTimeout(resolve, 45 * 1000))
 
             ++n
@@ -349,6 +352,7 @@ var producGame = {
             data: transParams(params)
         })
         if (data.code === '0000') {
+															
             return {
                 jar: config.jar,
                 games: data.data
@@ -365,6 +369,8 @@ var producGame = {
         console.info('剩余未完成game', games.length)
         let queue = new PQueue({ concurrency: 15 });
 
+					   
+						
         let others = ['1110422106']
 
         console.info('调度任务中', '并发数', 15)
@@ -394,6 +400,7 @@ var producGame = {
         await queue.onIdle()
 
         await new Promise((resolve, reject) => setTimeout(resolve, (Math.floor(Math.random() * 10) + 30) * 1000))
+		
         games = await producGame.timeTaskQuery(axios, options)
         games = games.filter(g => g.state === '1')
         console.info('剩余未领取game', games.length)
@@ -481,6 +488,9 @@ var producGame = {
         if (data) {
             console.info(data.msg)
             return data.data
+								
+												   
+			 
         } else {
             console.error('记录失败')
         }
@@ -510,6 +520,7 @@ var producGame = {
         if (data) {
             console.info(data.msg)
             if (data.msg.indexOf('防刷策略接口校验不通过') !== -1) {
+																									  
                console.error('获取奖励失败')
             }
             console.reward('flow', '100m')
